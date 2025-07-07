@@ -1,0 +1,13 @@
+{
+  "demo@example.com": {
+    "password": "hashed-password",
+    "approved": true,
+    "chat_id": "123456789"
+  },
+  "chinedudazi@gmail.com": {
+    "password": "scrypt:32768:8:1$L27OTZajg2UBqhzV$ea86d5d51059b5acbaae0dc16a8675b7a624774ed274a11848d9238ed724bc11f8c48dac4728fea8af6410beca0d590a32851c92daee26d0cb356189996aba1e",
+    "telegram_username": "Chinedudazi",
+    "approved": true,
+    "is_admin": true
+  }
+}
