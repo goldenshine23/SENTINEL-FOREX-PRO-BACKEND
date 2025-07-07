@@ -1,14 +1,11 @@
 import MetaTrader5 as mt5
 from utils import log
-from backend.config import MAX_LOT_SIZE, RISK_SMALL_ACCOUNT, RISK_LARGE_ACCOUNT
+from config import MAX_LOT_SIZE, RISK_SMALL_ACCOUNT, RISK_LARGE_ACCOUNT
 
 
 def get_open_position(symbol, positions):
     """Return the open position for the symbol, if any."""
-    for pos in positions:
-        if pos.symbol == symbol:
-            return pos
-    return None
+    return next((pos for pos in positions if pos.symbol == symbol), None)
 
 
 def calculate_lot_size(account_balance):
@@ -24,8 +21,7 @@ def calculate_lot_size(account_balance):
         risk = RISK_LARGE_ACCOUNT
         lot = round(min((risk * account_balance) / 1000, MAX_LOT_SIZE), 2)
         return lot
-    else:
-        return 0.01  # fallback minimum
+    return 0.01  # fallback minimum
 
 
 def scale_in_position(mt5_manager, position):
@@ -49,12 +45,16 @@ def scale_in_position(mt5_manager, position):
     price = tick.ask if position.type == mt5.POSITION_TYPE_BUY else tick.bid
     order_type = "buy" if position.type == mt5.POSITION_TYPE_BUY else "sell"
 
+    if not callable(getattr(mt5_manager, "place_order", None)):
+        log(f"⚠️ mt5_manager has no callable method 'place_order'. Check your class implementation.")
+        return
+
     success = mt5_manager.place_order(
         symbol=position.symbol,
         lot=add_volume,
         order_type=order_type,
         price=price,
-        sl=0,  # optional: you can calculate SL/TP dynamically
+        sl=0,
         tp=0,
     )
 
@@ -77,17 +77,12 @@ def manage_trailing_stop(position, entry_price, strategy_sr):
 
     current_price = tick.bid if position.type == mt5.POSITION_TYPE_SELL else tick.ask
 
-    if position.type == mt5.POSITION_TYPE_BUY:
-        profit_target = entry_price * 1.01
-        if current_price >= profit_target:
-            new_sl = max(entry_price, strategy_sr)
-            update_stop_loss(position, new_sl)
-
-    elif position.type == mt5.POSITION_TYPE_SELL:
-        profit_target = entry_price * 0.99
-        if current_price <= profit_target:
-            new_sl = min(entry_price, strategy_sr)
-            update_stop_loss(position, new_sl)
+    if position.type == mt5.POSITION_TYPE_BUY and current_price >= entry_price * 1.01:
+        new_sl = max(entry_price, strategy_sr)
+        update_stop_loss(position, new_sl)
+    elif position.type == mt5.POSITION_TYPE_SELL and current_price <= entry_price * 0.99:
+        new_sl = min(entry_price, strategy_sr)
+        update_stop_loss(position, new_sl)
 
 
 def update_stop_loss(position, new_sl):
@@ -101,6 +96,8 @@ def update_stop_loss(position, new_sl):
         "tp": position.tp,
         "symbol": position.symbol,
         "magic": position.magic,
+        "type_time": mt5.ORDER_TIME_GTC,
+        "type_filling": mt5.ORDER_FILLING_IOC,
     }
 
     result = mt5.order_send(request)
@@ -108,3 +105,40 @@ def update_stop_loss(position, new_sl):
         log(f"✅ SL updated for {position.symbol} → SL = {new_sl}")
     else:
         log(f"❌ SL update failed on {position.symbol} → code {result.retcode} ({result.comment})")
+
+
+def place_order(symbol, lot, order_type, price, sl, tp):
+    """
+    Sends a trade order to MT5 with the given parameters.
+    """
+    order_type_map = {
+        "buy": mt5.ORDER_TYPE_BUY,
+        "sell": mt5.ORDER_TYPE_SELL,
+    }
+
+    if order_type not in order_type_map:
+        log(f"❌ Invalid order_type: {order_type}")
+        return False
+
+    request = {
+        "action": mt5.TRADE_ACTION_DEAL,
+        "symbol": symbol,
+        "volume": lot,
+        "type": order_type_map[order_type],
+        "price": price,
+        "sl": sl,
+        "tp": tp,
+        "deviation": 10,
+        "magic": 123456,
+        "comment": "SentinelFXBot",
+        "type_time": mt5.ORDER_TIME_GTC,
+        "type_filling": mt5.ORDER_FILLING_IOC,
+    }
+
+    result = mt5.order_send(request)
+    if result.retcode == mt5.TRADE_RETCODE_DONE:
+        log(f"✅ Order placed: {order_type.upper()} {symbol} at {price}, SL={sl}, TP={tp}")
+        return True
+    else:
+        log(f"❌ Order failed: code={result.retcode}, comment={result.comment}")
+        return False

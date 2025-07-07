@@ -1,6 +1,7 @@
 import MetaTrader5 as mt5
 import logging
-from backend.config import MAGIC_NUMBER  # Ensure this is accessible
+from config import MAGIC_NUMBER  # ✅ Use relative or direct import based on your structure
+
 
 class MT5Manager:
     def __init__(self):
@@ -8,7 +9,7 @@ class MT5Manager:
 
     def connect(self, login=None, password=None, server=None):
         """
-        Connect to MetaTrader 5. Optionally using credentials.
+        Connect to MetaTrader 5 using optional credentials.
         """
         try:
             success = (
@@ -25,7 +26,7 @@ class MT5Manager:
             return True
 
         except Exception as e:
-            logging.error(f"❌ Exception during MT5 connection: {e}")
+            logging.exception(f"❌ Exception during MT5 connection: {e}")
             return False
 
     def disconnect(self):
@@ -42,7 +43,7 @@ class MT5Manager:
                 return False
             return len(positions) > 0
         except Exception as e:
-            logging.error(f"❌ Error checking open positions for {symbol}: {e}")
+            logging.exception(f"❌ Error checking open positions for {symbol}: {e}")
             return False
 
     def get_current_price(self, symbol, order_type):
@@ -53,7 +54,7 @@ class MT5Manager:
                 return None
             return tick.ask if order_type.lower() == "buy" else tick.bid
         except Exception as e:
-            logging.error(f"❌ Error getting current price for {symbol}: {e}")
+            logging.exception(f"❌ Error getting current price for {symbol}: {e}")
             return None
 
     def place_order(self, symbol, lot, order_type, price=None, sl=0.0, tp=0.0):
@@ -78,7 +79,7 @@ class MT5Manager:
                 mt5.ORDER_FILLING_RETURN,
                 mt5.ORDER_FILLING_FOK
             ):
-                logging.warning(f"⚠️ Unknown filling mode for {symbol}: {filling_mode}")
+                logging.warning(f"⚠️ Unknown or unsupported filling mode for {symbol}: {filling_mode}")
 
             order = {
                 "action": mt5.TRADE_ACTION_DEAL,
@@ -91,6 +92,7 @@ class MT5Manager:
                 "magic": MAGIC_NUMBER,
                 "deviation": 10,
                 "type_filling": filling_mode,
+                "type_time": mt5.ORDER_TIME_GTC,  # ✅ Always include time type
             }
 
             result = mt5.order_send(order)
@@ -113,5 +115,5 @@ class MT5Manager:
             return True
 
         except Exception as e:
-            logging.error(f"❌ Exception placing order on {symbol}: {e}")
+            logging.exception(f"❌ Exception placing order on {symbol}: {e}")
             return False

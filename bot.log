@@ -1,0 +1,29 @@
+[2025-07-07 10:25:34] (admin@sentinel.com): ✅ Bot started on account 188728324 (Balance: 13.04, Risk: 10.0%)
+[2025-07-07 10:25:34] (admin@sentinel.com): 📡 Trade Signal: {'symbol': 'EURUSDm', 'type': 'buy', 'entry_price': 1.17278, 'sl': np.float64(1.17217), 'tp': np.float64(1.17899), 'lot': 0.01}
+[2025-07-07 10:25:34] (admin@sentinel.com): ⚠️ Bot error: place_order() got an unexpected keyword argument 'trade_type'. Did you mean 'order_type'?
+[2025-07-07 10:25:34] (admin@sentinel.com): 🛑 Bot stopped.
+[2025-07-07 10:28:33] (admin@sentinel.com): ✅ Bot started on account 188728324 (Balance: 13.04, Risk: 10.0%)
+[2025-07-07 10:28:33] (admin@sentinel.com): ⏳ No valid setup for EURUSDm
+[2025-07-07 10:28:35] (admin@sentinel.com): ⏳ No valid setup for GBPUSDm
+[2025-07-07 10:28:38] (admin@sentinel.com): ⏳ No valid setup for USDJPYm
+[2025-07-07 10:28:42] (admin@sentinel.com): 📡 Trade Signal: {'symbol': 'USDCHFm', 'type': 'sell', 'entry_price': 0.79713, 'sl': np.float64(0.79753), 'tp': np.float64(0.79349), 'lot': 0.01}
+[2025-07-07 10:28:42] (admin@sentinel.com): ✅ Trade placed: {'symbol': 'USDCHFm', 'type': 'sell', 'entry_price': 0.79713, 'sl': np.float64(0.79753), 'tp': np.float64(0.79349), 'lot': 0.01}
+[2025-07-07 10:28:44] (admin@sentinel.com): ⏳ No valid setup for USDCADm
+[2025-07-07 10:28:47] (admin@sentinel.com): ⏳ No valid setup for AUDUSDm
+[2025-07-07 10:28:50] (admin@sentinel.com): 📡 Trade Signal: {'symbol': 'NZDUSDm', 'type': 'buy', 'entry_price': 0.59927, 'sl': np.float64(0.59878), 'tp': np.float64(0.60517), 'lot': 0.01}
+[2025-07-07 10:28:52] (admin@sentinel.com): ✅ Trade placed: {'symbol': 'NZDUSDm', 'type': 'buy', 'entry_price': 0.59927, 'sl': np.float64(0.59878), 'tp': np.float64(0.60517), 'lot': 0.01}
+[2025-07-07 10:28:55] (admin@sentinel.com): ⏳ No valid setup for XAUUSDm
+[2025-07-07 10:28:58] (admin@sentinel.com): ⏳ No valid setup for XAGUSDm
+[2025-07-07 10:29:02] (admin@sentinel.com): 📡 Trade Signal: {'symbol': 'BTCUSDm', 'type': 'buy', 'entry_price': 108934.1, 'sl': np.float64(108679.19), 'tp': np.float64(109760.81), 'lot': 0.01}
+[2025-07-07 10:29:04] (admin@sentinel.com): ✅ Trade placed: {'symbol': 'BTCUSDm', 'type': 'buy', 'entry_price': 108934.1, 'sl': np.float64(108679.19), 'tp': np.float64(109760.81), 'lot': 0.01}
+[2025-07-07 10:56:21] (admin@sentinel.com): ✅ Bot started on account 188728324 (Balance: 12.54, Risk: 10.0%)
+[2025-07-07 10:56:22] (admin@sentinel.com): 🔒 Max trades reached. Skipping this cycle.
+[2025-07-07 10:56:52] (admin@sentinel.com): 🔒 Max trades reached. Skipping this cycle.
+[2025-07-07 10:57:22] (admin@sentinel.com): 🔒 Max trades reached. Skipping this cycle.
+[2025-07-07 10:57:52] (admin@sentinel.com): 🔒 Max trades reached. Skipping this cycle.
+[2025-07-07 10:58:22] (admin@sentinel.com): 🔒 Max trades reached. Skipping this cycle.
+[2025-07-07 10:58:52] (admin@sentinel.com): 🔒 Max trades reached. Skipping this cycle.
+[2025-07-07 10:59:22] (admin@sentinel.com): 🔒 Max trades reached. Skipping this cycle.
+[2025-07-07 10:59:52] (admin@sentinel.com): 🔒 Max trades reached. Skipping this cycle.
+[2025-07-07 11:00:22] (admin@sentinel.com): 🔒 Max trades reached. Skipping this cycle.
+[2025-07-07 11:00:52] (admin@sentinel.com): 🔒 Max trades reached. Skipping this cycle.

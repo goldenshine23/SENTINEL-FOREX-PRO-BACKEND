@@ -1,5 +1,6 @@
 import datetime
-from backend.config import CRYPTO_SYMBOLS, ALLOW_WEEKEND_CRYPTO, TRADING_SESSIONS
+from config import CRYPTO_SYMBOLS, ALLOW_WEEKEND_CRYPTO, TRADING_SESSIONS
+
 
 def is_weekend():
     """Check if current UTC day is Saturday or Sunday"""

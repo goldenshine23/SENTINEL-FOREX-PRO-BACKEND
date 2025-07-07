@@ -18,6 +18,10 @@ RISK_TIERS = [
     {"balance_max": float("inf"), "risk_percent": 0.02}
 ]
 
+# === Risk Constants ===
+RISK_SMALL_ACCOUNT = 0.1   # 10% risk for accounts < $100
+RISK_LARGE_ACCOUNT = 0.02  # 2% risk for accounts >= $100
+
 # === Secure Keys and API Tokens ===
 SECRET_KEY = os.getenv("SECRET_KEY", "your-super-secret-key")
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "your-telegram-bot-token")

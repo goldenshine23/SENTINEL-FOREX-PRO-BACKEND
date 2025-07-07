@@ -5,14 +5,14 @@ import logging
 # Adjust import based on your folder structure
 from .mt5_manager import MT5Manager  # If inside `bot/`
 
-# Setup logging
+# ✅ Setup logging
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(message)s')
 
-# Track running bots globally
+# ✅ Track running bots globally
 running_bots = {}  # user_id -> UserBotRunner instance
 
 # ----------------------------------------
-# UserBotRunner: Handles one user's MT5 bot
+# 🧠 UserBotRunner: Handles one user's MT5 bot
 # ----------------------------------------
 class UserBotRunner:
     def __init__(self, user_id, config):

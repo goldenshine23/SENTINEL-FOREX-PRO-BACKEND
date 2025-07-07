@@ -9,7 +9,7 @@ BASE_SYMBOLS = [
 def detect_broker_symbols():
     """
     Detects tradable, visible symbols matching the common base pairs.
-    Useful for adapting to brokers with suffixes like '.m', '.r', etc.
+    Useful for brokers with suffixes like '.m', '.r', etc.
     """
     if not mt5.initialize():
         print(f"❌ MT5 initialization failed: {mt5.last_error()}")
@@ -30,3 +30,6 @@ def detect_broker_symbols():
 
     mt5.shutdown()
     return matched_symbols
+
+# ✅ Attempt dynamic detection, fallback if none detected
+SYMBOLS_TO_TRADE = detect_broker_symbols() or ["EURUSD", "GBPUSD", "XAUUSD", "USDJPY"]
